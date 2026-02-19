@@ -1,34 +1,149 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
-  <body>
-    <form>
-  <div class="mb-3">
-    <label for="InputWeight" class="form-label">Введите вес</label>
-    <input type="integer" class="form-control" id="InputWeight" >
-  </div>
-  <div class="mb-3">
-    <label for="InputHeight" class="form-label">Введите рост</label>
-    <input type="integer" class="form-control" id="InputHeight">
-  </div>
-      
-</form>
-  <button onclick="getBMI()" class="btn btn-primary">Submit</button>
-    <h1 id="out"></h1>
-<script>
-  function getBMI()
-  {
-    const weight = parseInt(document.getElementById("InputWeight").value)
-    const height = parseInt(document.getElementById("InputHeight").value)/100
-    const res = weight/(height*height)
-    document.getElementById("out").innerHTML = Math.round(res, 2)
-  }
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя Биография | Анимированная версия</title>
+    <style>
+        /* Основные стили */
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #ffffff;
+            /* Используем твое изображение на фон */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('1000047988.png') no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+        }
+
+        /* Анимация появления карточки */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-card {
+            background: rgba(15, 15, 25, 0.7); /* Чуть темнее для контраста с облаками */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 850px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            
+            /* Применяем анимацию */
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Анимация для фото */
+        .profile-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 3px solid #3498db;
+            object-fit: cover;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05); /* Легкое увеличение при наведении */
+        }
+
+        h1 { margin: 0; font-size: 2.8em; letter-spacing: -1px; }
+        h2 { color: #3498db; font-size: 1.1em; text-transform: uppercase; letter-spacing: 2px; margin-top: 25px; }
+        
+        .contact-info { color: #a0a0a0; margin-top: 8px; font-size: 0.95em; }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+        }
+
+        p { line-height: 1.7; color: #e0e0e0; font-weight: 300; }
+        
+        /* Анимация списка */
+        li { 
+            margin-bottom: 12px; 
+            list-style: none;
+            position: relative;
+        }
+        li::before {
+            content: "→";
+            position: absolute;
+            left: -20px;
+            color: #3498db;
+        }
+
+        /* Адаптивность для мобилок */
+        @media (max-width: 768px) {
+            .header { flex-direction: column; text-align: center; }
+            .content { grid-template-columns: 1fr; gap: 20px; }
+            .glass-card { padding: 25px; margin: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="glass-card">
+    <div class="header">
+        <img src="photo.jpg" alt="Моё фото" class="profile-img">
+        <div>
+            <h1>Твое Имя</h1>
+            <div class="contact-info">
+                <span>📍 Твой Город</span> | 
+                <span>✉️ email@example.com</span> | 
+                <span>📱 @telegram</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="left-col">
+            <h2>Обо мне</h2>
+            <p>Я создаю уникальные проекты и постоянно учусь новому. Это пространство — моя цифровая биография, где я делюсь своим опытом и целями.</p>
+            
+            <h2>Навыки</h2>
+            <ul>
+                <li>Разработка веб-сайтов (HTML/CSS)</li>
+                <li>Работа с Git и командной строкой</li>
+                <li>Креативное решение задач</li>
+            </ul>
+        </div>
+
+        <div class="right-col">
+            <h2>История</h2>
+            <p>Здесь ты можешь описать свой путь. На фоне этого облачного неба текст в темном блоке смотрится особенно глубоко и читаемо.</p>
+            
+            <h2>Интересы</h2>
+            <p>Путешествия, технологии будущего и постоянное саморазвитие.</p>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>
